@@ -82,45 +82,11 @@ public class Track extends Group {
 
         createLocations(numLocation, offset,sceneX,sceneY,rand);
         createCars(numPlayers,offset,rand);
-//        // Initializes the locations.
-//        for (int k = 0; k < numLocation; k++) {
-//            int tmpOffSetX = (int) sceneX - ((int) offset * 2);
-//            int tmpOffsetY = (int) sceneY - ((int) offset * 2);
-//            double x = rand.nextInt(tmpOffSetX - 300);
-//            double y = rand.nextInt(tmpOffsetY);
-//            for (Location lo : locations)
-//                if (lo.intersects(new BoundingBox(x, y, offset * 2, offset * 2))) {
-//                    x = rand.nextInt(tmpOffSetX - 300);
-//                    y = rand.nextInt(tmpOffsetY);
-//                }
-//            if (x < offset) x += (offset + 10); if (y < offset) y += (offset + 10);
-//            if (y > sceneY - offset) y -= (offset + 10); if (x > sceneX - offset) x -= (offset + 10);
-//            locations.add(new Location(x, y, offset, "Location " + k));            // adds new locations
-//            this.getChildren().add(locations.get(k));
-//            this.getChildren().add(new Text(
-//                    locations.get(k).getCenterX() - offset,
-//                    locations.get(k).getCenterY() + (offset * 2),
-//                    locations.get(k).getName()));
-//            locations.get(k).setOnMouseClicked(locationEvent);
-//        }
-//        ArrayList<Integer> forStart = new ArrayList<>();
-//        ArrayList<Integer> forEnd = new ArrayList<>();
-//        for (int j = 0; j < numPlayers; j++) {
-//            int start = rand.nextInt(locations.size());
-//            int end = rand.nextInt(locations.size());
-//            end = start == end ? rand.nextInt(locations.size()) : end;
-//            while (forStart.contains(start)) start = rand.nextInt(locations.size());
-//            while (forEnd.contains(end)) end = rand.nextInt(locations.size());
-//            forStart.add(start);
-//            forEnd.add(end);
-//            Location s = locations.get(start);
-//            Location e = locations.get(end);
-//            cars.add(new Car(s.getCenterX(), s.getCenterY(), (offset * 2) - 16, s, e, j));
-//            this.getChildren().add(cars.get(j));
-//        }
-//
+
         activeCar = cars.get(0);
+
         // System.out.println("Active Car: " + activeCar.getIdentifier() + "\n\n");
+
         for (Location location : locations)
             if (location == activeCar.getEnd()) location.setActive(false, true);
             // System.out.println(location.toString());
