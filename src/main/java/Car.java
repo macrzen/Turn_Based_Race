@@ -7,43 +7,41 @@ import javafx.scene.shape.Rectangle;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URL;
 import java.util.ArrayList;
 
 /**
+ * TODO: Modify calculation of time.
  * Creates a model for the representation of a car.
  */
 public class Car extends Rectangle {
 
-    /** Components of a car. Contribute to time
-     * TODO: Implement these components. Create relationships between them and how fast a car travels over distance.
+
+    /**
+     * Components of a car. Contribute to time
+     * TODO: Implement these components.
+     * TODO: Create relationships between them and how fast a car travels over distance.
      */
     private int engine, suspension, boost, weight;
 
-    /**
-     * TODO: Turbo boost??
-     */
+
+    /** TODO: Turbo boost?? */
     private boolean isBoosted;
 
-    /**
-     * The total time the car has driven for.
-     * Proportional to the distance traveled and components.
-     */
+
+    /** The total time the car has driven for. Proportional to the distance traveled and components. */
     private double time;
 
-    /**
-     * Reference to the locations a particular car has visited.
-     */
+
+    /** Reference to the locations a particular car has visited. */
     private ArrayList<Location> stops;
 
-    /**
-     * Reference to locations.
-     */
+
+    /** Reference to locations. */
     private Location start, end, currentLocation;
 
-    /**
-     * Reference to the turn order and identification.
-     * TODO: Associate a car to a users name ??
-     */
+
+    /** Reference to the turn order and identification. TODO: Associate a car to a users name ?? */
     private int id;
 
     /**
@@ -58,22 +56,21 @@ public class Car extends Rectangle {
      */
     public Car(double x, double y, double offset, Location start, Location end, int id) {
         super(x, y, offset, offset);
-        String[] names = { "bug", "blue", "black", "yellow","red"};
-        File temp = new File("src/main/resources/images/"+names[id%names.length]+".png" );
-        String absolutePath = temp.getAbsolutePath();
-        this.setFill(new ImagePattern(new Image("file:"+absolutePath)));
-        // Color[] colors = { Color.CYAN, Color.PURPLE, Color.ORANGE, Color.YELLOW, Color.BLACK};
-        // Replace above setFill with the one below, and uncomment the above colors array
-        //   if problems arise with finding the images.
-        // this.setFill(colors[id%colors.length]);
         this.start = start;
         this.end = end;
         this.id = id;
 
-        currentLocation = start;
-        start.setActive(false);
-        end.setActive(false);
+        String[] names = { "bug", "blue", "black", "yellow","red"};
+        URL resource = getClass().getResource("/main/resources/images/" + names[id % names.length] + ".png");
+        this.setFill(new ImagePattern(new Image(resource.toString())));
 
+        // Alternative fill, replace above setFill with the one below, and uncomment the above colors array
+        // Color[] colors = { Color.CYAN, Color.PURPLE, Color.ORANGE, Color.YELLOW, Color.BLACK};
+        // this.setFill(colors[id%colors.length]);
+
+        currentLocation = start;
+        // start.setActive(false); // Likely unnecessary.
+        // end.setActive(false);
         stops = new ArrayList<Location>();
         stops.add(start);
     }
@@ -130,13 +127,23 @@ public class Car extends Rectangle {
      */
     public void newLocation(Location location) {
         double distance = currentLocation.getDistanceToLocation(location);
-        System.out.println("Current location:" + currentLocation.getName() + " time current" + time + " distance to new location : " + distance);
+
+        // System.out.println(
+        // "Current location:" + currentLocation.getName()
+        // + " time current" + time + " distance to new location : " + distance);
+
         stops.add(location);
-        time += distance * 0.32; // Here is where the components like engine could be calculated
+
+        // TODO: Here is where the components like engine could be calculated
+        time += distance * 0.0032;
+
         this.setX(location.getCenterX());
         this.setY(location.getCenterY());
+
         currentLocation = location;
-        location.setActive(false);
+
+        location.setActive(false, false);
+
         // System.out.println("New Location " + location.getName() + " new time: " + time); //Useful for debugging
     }
 
