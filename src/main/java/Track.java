@@ -6,11 +6,14 @@ import javafx.geometry.BoundingBox;
 import javafx.geometry.Pos;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.effect.Glow;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.text.TextAlignment;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -84,7 +87,7 @@ public class Track extends Group {
         createCars(numPlayers,offset,rand);
 
         activeCar = cars.get(0);
-
+        activeCar.setVisible(true);
         // System.out.println("Active Car: " + activeCar.getIdentifier() + "\n\n");
 
         for (Location location : locations)
@@ -136,20 +139,22 @@ public class Track extends Group {
      * @param rand Random number generator.
      */
     private void createCars(int numPlayers, double offset, Random rand) {
+        offset *= 2;
         ArrayList<Integer> forStart = new ArrayList<>();
         ArrayList<Integer> forEnd = new ArrayList<>();
         for (int j = 0; j < numPlayers; j++) {
             int start = rand.nextInt(locations.size());
             int end = rand.nextInt(locations.size());
-            end = start == end ? rand.nextInt(locations.size()) : end;
+//            end = start == end ? end : rand.nextInt(locations.size());
             while (forStart.contains(start)) start = rand.nextInt(locations.size());
-            while (forEnd.contains(end)) end = rand.nextInt(locations.size());
+            while (forEnd.contains(end) && end != start) end = rand.nextInt(locations.size());
             forStart.add(start);
             forEnd.add(end);
             Location s = locations.get(start);
             Location e = locations.get(end);
             cars.add(new Car(s.getCenterX(), s.getCenterY(), (offset * 2) - 16, s, e, j));
             this.getChildren().add(cars.get(j));
+            cars.get(j).setVisible(false);
         }
 
     }
@@ -263,6 +268,37 @@ public class Track extends Group {
                 }
             }
 
+            for (Car c : cars) {
+                if (c != activeCar) c.setVisible(false);
+                else c.setVisible(true);
+            }
+
+
+        }
+        int finished = 0;
+        for (Car c : cars) if (c.isFinished()) finished++;
+        System.out.println(finished);
+
+        if ( finished == cars.size()) {
+            Car car = cars.get(0);
+            for (Car aCar : cars) {
+                aCar.setVisible(true);
+                if (car.getTime() > aCar.getTime()) {
+                    car = aCar;
+                }
+            }
+
+            Text t = new Text("Car #"+ car.getIdentifier() + "WINS!!");
+            t.setFont(Font.font(50));
+            t.setFill(Color.GREEN);
+            t.setEffect(new Glow());
+            t.setTextAlignment(TextAlignment.CENTER);
+            t.setTranslateY(100);
+            t.setTranslateX(200);
+            t.setTranslateZ(300);
+            this.getChildren().add(t);
+            car.setHeight(500);
+            car.setWidth(500);
         }
         // for (Location location : locations) System.out.println(location.toString());
 

@@ -44,6 +44,8 @@ public class Car extends Rectangle {
     /** Reference to the turn order and identification. TODO: Associate a car to a users name ?? */
     private int id;
 
+    private boolean isFinished;
+
     /**
      * Creates a car with,
      * @param x The location in the x direction
@@ -73,6 +75,7 @@ public class Car extends Rectangle {
         // end.setActive(false);
         stops = new ArrayList<Location>();
         stops.add(start);
+        isFinished = false;
     }
 
     /**
@@ -118,6 +121,8 @@ public class Car extends Rectangle {
         return stops.size() + 1 >= stop;
     }
 
+    public boolean isFinished() { return isFinished; }
+
     /**
      * Moves a car from one location to another.
      * Updates the time.
@@ -143,6 +148,8 @@ public class Car extends Rectangle {
         currentLocation = location;
 
         location.setActive(false, false);
+
+        if (location == end) isFinished = true;
 
         // System.out.println("New Location " + location.getName() + " new time: " + time); //Useful for debugging
     }

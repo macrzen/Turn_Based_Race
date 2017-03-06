@@ -99,16 +99,16 @@ public class Location extends Circle {
     public void setActive(boolean in, boolean orange) {
         active = in;
         URL green = getClass().getResource("/main/resources/images/greengif.gif" );
-        URL red = getClass().getResource("/main/resources/images/redgif.gif" );
+//        URL red = getClass().getResource("/main/resources/images/redgif.gif" );
         if (orange) this.setFill(Color.ORANGE); // TODO: Find image for this representation ?
         else {
-            if (!active) this.setFill(new ImagePattern(new Image(red.toString())));
-            // this.setFill(Color.CRIMSON); // Alternative to the above setFill
+            if (!active)
+//                this.setFill(new ImagePattern(new Image(red.toString())));
+             this.setFill(Color.CRIMSON); // Alternative to the above setFill
             else this.setFill(new ImagePattern(new Image(green.toString())));
             // this.setFill(Color.LIME); // Alternative to the above setFill
         }
     }
-
 
     /**
      * TODO: It might be clearer to initialize this when the locations are created
