@@ -19,6 +19,7 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 
 /**
+ * TODO: Create and display directions.
  * TODO: Align the restart button.
  * Responsible for the main thread within the program.
  * Starts with a prompt screen that prompts the user to select within a combo-box
@@ -121,7 +122,7 @@ public class View extends Application {
             players.setStyle("-fx-text-fill: #fff");
 
             comboBox = new ComboBox<Integer>();
-            comboBox.getItems().addAll(2, 3, 4, 5, 30);
+            comboBox.getItems().addAll(2, 3, 4, 5, 15);
             comboBox.setEditable(false);
             comboBox.setValue(2);
             comboBox.setStyle("-fx-text-fill: #111111; -fx-border-color: #fff;");
