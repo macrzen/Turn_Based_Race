@@ -23,42 +23,45 @@ import javafx.stage.Stage;
  * TODO: Align the restart button.
  * Responsible for the main thread within the program.
  * Starts with a prompt screen that prompts the user to select within a combo-box
- *   the number of players who will be playing. From there, a Track is created
- *   with the respective amount of cars.
+ * the number of players who will be playing. From there, a Track is created
+ * with the respective amount of cars.
  */
 public class View extends Application {
 
     /**
-     * The parent scene of the pane's
+     * The parent scene of the pane's.
      */
     private Scene scene;
 
     /**
      * The main screen for the game.
-     * Initialized in StartPrompt's event-handler for the start button
-     *   so that it can understand the selection for number of users.
+     * Initialized in StartPrompt's event-handler for the start button to pass the selection for number of users.
      */
     private Track track;
 
     /**
-     * Global reference to the restart button for the restart event-handler
+     * Global reference to the restart button for the restart event-handler.
      */
     private Button restartButton;
 
     /**
-     * Global reference to the start-prompt for the restart event-handler
+     * Global reference to the start-prompt for the restart event-handler.
      */
     private StartPrompt prompt;
 
     /**
      * Starts the program.
+     *
      * @param args Arguments
      */
-    public static void main(String[] args) { launch(args); }
+    public static void main(String[] args) {
+        launch(args);
+    }
 
     /**
      * The main running thread of the graphical interface.
      * Starts with a prompt and then ushers in the track.
+     *
      * @param stage The parent stage of the scene.
      * @throws Exception
      */
@@ -73,24 +76,22 @@ public class View extends Application {
     }
 
     /**
-     * Creates a prompt to allow users to choose how many players will be playing the game.
-     * Separated for clarity.
+     * Creates a prompt to allow users to choose how many players will be playing the game. Separated for clarity.
      */
     public class StartPrompt extends BorderPane {
 
         /**
-         * @comboBox A drop-down menu with a fixed set of selections.
+         * A drop-down menu with a fixed set of selections.
          */
         private ComboBox<Integer> comboBox;
 
         /**
-         * @button The start button. Separated for access by it's event handler
+         * The start button. Separated for access by it's event handler.
          */
         private Button button;
 
         /**
-         * Initializes the components of the start prompt including,
-         *     The title, a start button, and a ComboBox for the players to choose the amount of players.
+         * Initializes the a title, a start button, and a ComboBox for the players to choose the amount of players.
          */
         public StartPrompt() {
 
@@ -114,10 +115,10 @@ public class View extends Application {
 
         /**
          * Creates a grid for layout purposes.
+         *
          * @return gp a grid-pane with a label and a combo-box
          */
         private GridPane addGridPane() {
-
             Label players = new Label("Number of Players\t");
             players.setStyle("-fx-text-fill: #fff");
 
@@ -147,11 +148,8 @@ public class View extends Application {
             track = new Track();
             comboBox.setDisable(true);
             button.setDisable(true);
-
             int i = comboBox.getValue() != null ? comboBox.getValue() : 2;
-
-            track.setTrack(i, scene.getWidth(), scene.getHeight());
-
+            track.setTrack(i, 64, scene.getWidth(), scene.getHeight());
             scene.setRoot(track);
             restartButton = new Button("Restart");
             restartButton.setOnMouseClicked(restart);
@@ -160,8 +158,7 @@ public class View extends Application {
     }
 
     /**
-     * Handles restarting the game
-     * Re-initiates the start prompt and sets it to the screen's root
+     * Handles restarting the game. Re-initiates the start prompt and sets it to the screen's root.
      */
     private EventHandler<MouseEvent> restart = mouseEvent -> {
         prompt = new StartPrompt();
